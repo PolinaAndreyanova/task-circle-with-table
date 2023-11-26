@@ -1,58 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <?php
-$r = 100;
-$squareSize = 1;
-$squareCount = intdiv($r, $squareSize);
-$inscribedSquareSize = round((($squareCount * 4 * (2 ** 0.5)) / 8), 0, PHP_ROUND_HALF_DOWN);
-$arM = array_fill(0, $squareCount, array_fill(0, $squareCount, 0));
-
-$absPos = 0;
-$i = 0;
-$j = 0;
-
-for ($i1 = 0; $i1 < 3; $i1++) {
-    for ($j1 = 0; $j1 < 6; $j1++) {
-        $arM[$i1][$j1 + $absPos] = 1;
-        $arM[$squareCount - $j1 - $absPos - 1][$squareCount - $i1 - 1] = 1;
-    }   
-    $absPos += 6;
+$r = 500;
+for ($x = 0; $x < $r; $x++) {
+    $y = round((($r ** 2 - $x **2) ** 0.5), 0, PHP_ROUND_HALF_DOWN);
+    $arM[$r - $y][$x] = 1;
 }
-    
-$i += 3;
-$j += 3 * 6;
-$absPos = 0;
-
-for ($i1 = 0; $i1 < 6; $i1++) {
-    for ($j1 = 0; $j1 < 3; $j1++) {
-        $arM[$i + $i1][$j + $j1 + $absPos] = 1;
-        $arM[$squareCount - ($j + $j1 + $absPos) - 1][$squareCount - ($i + $i1) - 1] = 1;
-    }   
-    $absPos += 3;
-}
-
-$i += 6;
-$j += 6 * 3;
-$absPos = 0;
-
-while ($i < ($r - $inscribedSquareSize - 5)) {
-    for ($j1 = 0; $j1 < 2; $j1++) {
-        $arM[$i][$j + $j1 + $absPos] = 1;
-        $arM[$squareCount - ($j + $j1 + $absPos) - 1][$squareCount - $i - 1] = 1;
-    }
-    $absPos += 2;
-    $i += 1;
-}
-
-while ($i < ($r - $inscribedSquareSize)) {
-    for ($j1 = 0; $j1 < 1; $j1++) {
-        $arM[$i][$j + $j1 + $absPos] = 1;
-        $arM[$squareCount - ($j + $j1 + $absPos) - 1][$squareCount - $i - 1] = 1;
-    }
-    $absPos += 1;
-    $i += 1;
-}
-
 ?>
 <head>
     <meta charset="UTF-8" />
@@ -65,15 +18,8 @@ while ($i < ($r - $inscribedSquareSize)) {
             border: 1px solid black;
             border-spacing: 0px;
             border-collapse: collapse;
-            width: 100px;
+            width: 500px;
             box-sizing: content-box;
-        }
-        thead {
-            width: 100px;
-        }
-        tbody {
-            height: 100px;
-            width: 100px;
         }
         th, td {
             padding: 0;
@@ -88,33 +34,18 @@ while ($i < ($r - $inscribedSquareSize)) {
 
 <body>
     <table>
-        <thead>
-            <tr>
-                <th colspan="100">1/4 circle</th>
-            </tr>
-        </thead>
         <tbody>
-<?php
-foreach ($arM as $key => $value) {
-?>
+        <?php for ($x = 0; $x < $r; $x++): ?>
             <tr>
-<?php
-foreach ($arM[$key] as $k => $v) {
-    if ($arM[$key][$k] == 1) {
-?>
-                <td class="td__color_black"></td>
-<?php 
-} else {
-?>
-                <td></td>
-<?php 
-    }
-}
-?>
+            <?php for ($y = 0; $y < $r; $y++):
+                if ($arM[$x][$y]): ?>
+                    <td class="td__color_black"></td>
+                <?php else: ?>
+                    <td></td>
+                <?php endif;
+            endfor; ?>
             </tr>
-<?php
-}
-?>
+        <?php endfor; ?>
         </tbody>        
     </table>
 </body>

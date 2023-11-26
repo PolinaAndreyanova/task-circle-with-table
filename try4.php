@@ -85,7 +85,7 @@ while ($i < ($r - $inscribedSquareSize)) {
         .td__color_black {
             background-color: black;
         }
-        /* div {
+        div {
             position: absolute;
             top: 20px;
             width: 200px;
@@ -93,7 +93,7 @@ while ($i < ($r - $inscribedSquareSize)) {
             border: 1px solid red;
             border-radius: 50%;
             left: -100px
-        } */
+        }
     </style>
 </head>
 
